@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Ducpasample</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+	<head 
+	link rel="icon" href="http://www.prodraw.net/favicon/download.php?file=kopws60b_1.ico" type="image/x-icon"
+	link rel="shortcut icon" href="http://www.prodraw.net/favicon/download.php?file=kopws60b_1.ico" type="image/x-icon"> 
+		<title><%= full_title(yield(:title)) %></title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>
+		<%= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track': 'reload' %>
+		<%= render 'layouts/shim' %>
+	</head>
+	<body>
+		<%= render 'layouts/header' %>
+		<div class="container">
+		<% flash.each do |message_type, message| %>
+		<%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+		<% end %>
+		<%= yield %>
+		<%= render 'layouts/footer' %>
+		<%= debug(params) if Rails.env.development? %>
+		</div>
+	</body>
 </html>
