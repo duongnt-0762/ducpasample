@@ -5,6 +5,16 @@
 			<h1>
 				<%= gravatar_for @user %>
 				<%= @user.name %>
+			    <br /><%=@user.dob %>
+                <br /><%=@user.address %>
+                <br />
+                <% if @user.gender == 1 %>
+                	Gender : Male
+			    <% elsif @user.gender == 2 %>
+			   		Gender : Female
+			    <% elsif @user.gender == 3 %>
+			   		Gender : Other
+			    <% end %>
 			</h1>
 		</section>
 	</aside>
