@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by(id: params[:id])
     if @user.nil?
-      flash[:danger] = "Can't find this user"
+      flash[:danger] = "This user is not exist"
       redirect_to root_path
     end
   end
@@ -34,6 +34,7 @@ class UsersController < ApplicationController
   end
   
   private
+
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
