@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    
+    @microposts = @user.microposts.order_by_time.paginate(page: params[:page])
   end
 
   def edit
