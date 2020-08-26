@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :check_logged_in, only: [:new]
-  before_action :find_id, only: [:correct_user, :show, :edit, :update, :destroy]
+  before_action :find_id, only: [:show, :edit,:update, :correct_user, :destroy]
   before_action :correct_user,only: [:edit, :update]
   before_action :admin_user,only: :destroy
 
@@ -25,7 +25,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @microposts = @user.microposts.order_by_time.paginate(page: params[:page])
+      @follow = current_user.active_relationships.build
+      @unfollow = current_user.active_relationships.find_by(followed_id: @user.id)
+      @microposts = @user.microposts.order_by_time.paginate(page: params[:page])
   end
 
   def edit
@@ -46,6 +48,20 @@ class UsersController < ApplicationController
       else
         render :edit
       end
+  end
+
+   def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private
